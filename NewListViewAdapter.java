@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class NewListViewAdapter extends ArrayAdapter<Product>{
 
+    int layoutResourceId;
+    Context context;
+    Product data[] = null;
     TextView numId,
             productName,
             price;

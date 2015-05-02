@@ -31,29 +31,33 @@ public class MakeNewListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_make_new_list);
 
 
-        listView = (ListView) findViewById(R.id.listView);
-        newList = new ArrayList<Product>();
-
-        count = newList.size();
-
         Intent i = getIntent();
         Bundle b = i.getBundleExtra("bundle");
         String name = b.getString("name");
         String price = b.getString("price");
         double newprice = Double.parseDouble(price);
         db = new NewListDbHelper(this);
-
         db.adddata(this, name, newprice);
+        listView = (ListView) findViewById(R.id.listView);
+        newList = new ArrayList<Product>();
         newList = db.getNewList();
+        count = newList.size();
+
+
+
+
+
+
 
         for (Product cn : newList){
             String log = "Id: " + cn.get_id() + " ,Product Name: " + cn.getProductName() + " ,Product Price: " + cn.getPrice();
             // Writing products to log
             Log.d("Name: ", log);
-
         }
-        NewListViewAdapter adapter = new NewListViewAdapter(this, R.layout.product_row, newList);
+
+        NewListViewAdapter adapter = new NewListViewAdapter(this, R.layout.newlist_row, newList);
         listView.setAdapter(adapter);
+
 
     }
 

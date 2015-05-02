@@ -14,12 +14,17 @@ import java.util.List;
  */
 public class NewListDbHelper extends SQLiteOpenHelper{
 
+
+    //Database Version
     private static final int DATABASE_VERSION = 1;
+    //Database Name
     private static final String DATABASE_NAME = "List";
+    //Table Name
     private static final String TABLE_LIST = "listTable";
-    public static final String KEY_ID = "id";
-    public static final String KEY_NAME = "name";
-    public static final String KEY_PRICE = "price";
+    //Column Name
+    private static final String KEY_ID = "id";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_PRICE = "price";
 
 
     public NewListDbHelper(Context context) {
@@ -30,7 +35,7 @@ public class NewListDbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CreateTableList = "CREATE TABLE " + TABLE_LIST + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_PRICE + " TEXT" + ")";
         db.execSQL(CreateTableList);
     }
@@ -47,7 +52,7 @@ public class NewListDbHelper extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, name);
         values.put(KEY_PRICE, price);
-        db.insert(TABLE_LIST, name, values);
+        db.insert(TABLE_LIST, null, values);
         db.close();
     }
 
@@ -71,22 +76,22 @@ public class NewListDbHelper extends SQLiteOpenHelper{
         db.execSQL(countQuery);
     }
 
-    //Get newList
+    //Get FavList
     public List<Product> getNewList(){
         String selectQuery = "SELECT  * FROM " + TABLE_LIST;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        List<Product> newList = new ArrayList<Product>();
+        List<Product> FavList = new ArrayList<Product>();
         if (cursor.moveToFirst()) {
             do {
                 Product list = new Product();
                 list.set_id(Integer.parseInt(cursor.getString(0)));
                 list.setProductName(cursor.getString(1));
                 list.setPrice(Double.parseDouble(cursor.getString(2)));
-                newList.add(list);
+                FavList.add(list);
             } while (cursor.moveToNext());
         }
-        return newList;
+        return FavList;
     }
 
 

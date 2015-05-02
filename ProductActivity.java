@@ -118,5 +118,4 @@ public class ProductActivity extends Activity {
 
 
 
-
 }
